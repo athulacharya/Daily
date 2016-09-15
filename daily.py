@@ -76,7 +76,7 @@ def main():
                              body);
     sent_msg = send_message(service, "me", message)
 
-    while (datetime.now(timezone.utc) - utc_today) < timedelta(days=5):
+    while (datetime.now(timezone.utc) - utc_today) < timedelta(days=1):
         time.sleep(120)
 
         # search for unread messages from user
