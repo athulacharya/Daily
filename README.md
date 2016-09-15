@@ -2,7 +2,7 @@
 A gmail-based journalling service.
 
 ## Overview
-Daily will send you emails asking you to write a journal. You write a journal entry by replying to the email. As you accumulate a history of journal entries, it will remind you of what you wrote a month ago and on the same date in previous years.
+Daily will send you emails asking you to write a journal. You write a journal entry by replying to the email. As you accumulate a history of journal entries, it will remind you of what you wrote on the same date a month ago and in previous years.
 
 ## Installation
 NOTE: This project is very much in an alpha stage! And it will likely stay that way. 
