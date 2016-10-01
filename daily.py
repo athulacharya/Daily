@@ -77,7 +77,7 @@ def main():
     sent_msg = send_message(service, "me", message)
 
     while (datetime.now(timezone.utc) - utc_today) < timedelta(days=1):
-        time.sleep(120)
+        time.sleep(600)
 
         # search for unread messages from user
         messagelist = query_msgs(service, "me", "from:%s label:UNREAD" % RECEIVER)
