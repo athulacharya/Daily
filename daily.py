@@ -51,18 +51,19 @@ def main():
     utc_today = datetime.now(timezone.utc)
     local_today = utc_today.astimezone(LOCALTIME)
     body = PROMPTS[random.randint(0,len(PROMPTS)-1)]+'\n\n'
-    # get ALL entries on the same day-of-month
-    previous = dbsession.query(Entry).filter(sqlalchemy.func.strftime('%d', Entry.timestamp)
-                                             .is_(str(utc_today.day))).order_by(Entry.timestamp).all()
+    # get ALL entries
+    previous = dbsession.query(Entry).order_by(Entry.timestamp).all()
     previous.reverse()
+
     for entry in previous:
-        if entry.timestamp.year == utc_today.year and entry.timestamp.month == (utc_today.month-1):
-            body += '--------------------\n' + 'Last month, you wrote:\n\n' + str(entry.timestamp) + ':\n' + entry.entry + '\n\n'
-        elif utc_today.month == 1 and entry.timestamp.month == 12 and entry.timestamp.year == (utc_today.year-1):
-            body += '--------------------\n' + 'Last month, you wrote:\n\n' + str(entry.timestamp) + ':\n' + entry.entry + '\n\n'
-        elif entry.timestamp.year < utc_today.year and entry.timestamp.month == utc_today.month:
-            years_ago = utc_today.year - entry.timestamp.year
-            body += '--------------------\n' + str(years_ago) + ' years ago, you wrote:\n\n' + str(entry.timestamp) + ':\n' + entry.entry + '\n\n'
+        if (entry.timestamp.day == utc_today.day):
+            if entry.timestamp.year == utc_today.year and entry.timestamp.month == (utc_today.month-1):
+                body += '--------------------\n' + 'Last month, you wrote:\n\n' + str(entry.timestamp) + ':\n' + entry.entry + '\n\n'
+            elif utc_today.month == 1 and entry.timestamp.month == 12 and entry.timestamp.year == (utc_today.year-1):
+                body += '--------------------\n' + 'Last month, you wrote:\n\n' + str(entry.timestamp) + ':\n' + entry.entry + '\n\n'
+            elif entry.timestamp.year < utc_today.year and entry.timestamp.month == utc_today.month:
+                years_ago = utc_today.year - entry.timestamp.year
+                body += '--------------------\n' + str(years_ago) + ' years ago, you wrote:\n\n' + str(entry.timestamp) + ':\n' + entry.entry + '\n\n'
 
     message = create_message(SENDER, 
                              RECEIVER,
